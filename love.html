@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+  <title>รักพี่ไหมคะเดีย 💕</title>
+  <link href="https://fonts.googleapis.com/css2?family=Mitr:wght@300;400;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --pink: #ff4d8d;
+      --pink-light: #ff85b3;
+      --pink-pale: #ffe0ed;
+      --rose: #ff1a6b;
+      --cream: #fff5f8;
+      --text: #3a1a2e;
+    }
+
+    body {
+      font-family: 'Mitr', sans-serif;
+      background: var(--cream);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      position: relative;
+    }
+
+    /* Soft background gradient mesh */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 80% 60% at 20% 20%, #ffd6e7 0%, transparent 60%),
+        radial-gradient(ellipse 60% 80% at 80% 80%, #ffb3d1 0%, transparent 60%),
+        radial-gradient(ellipse 50% 50% at 50% 50%, #fff0f5 0%, transparent 80%);
+      z-index: 0;
+    }
+
+    .card {
+      position: relative;
+      z-index: 10;
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(20px);
+      border: 2px solid rgba(255, 77, 141, 0.2);
+      border-radius: 32px;
+      padding: 56px 48px 48px;
+      max-width: 360px;
+      width: 90%;
+      text-align: center;
+      box-shadow:
+        0 8px 40px rgba(255, 77, 141, 0.15),
+        0 2px 8px rgba(255, 77, 141, 0.08);
+      animation: cardIn 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+    }
+
+    @keyframes cardIn {
+      from { opacity: 0; transform: scale(0.7) translateY(30px); }
+      to   { opacity: 1; transform: scale(1) translateY(0); }
+    }
+
+    .emoji-big {
+      font-size: 72px;
+      display: block;
+      margin-bottom: 16px;
+      animation: pulse 2s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.12); }
+    }
+
+    .question {
+      font-size: 2.2rem;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 8px;
+      letter-spacing: 0.02em;
+    }
+
+    .subtext {
+      font-size: 0.95rem;
+      color: #c97fa0;
+      margin-bottom: 40px;
+      font-weight: 300;
+    }
+
+    .buttons {
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+    }
+
+    .btn {
+      font-family: 'Mitr', sans-serif;
+      font-size: 1.1rem;
+      font-weight: 600;
+      padding: 14px 36px;
+      border: none;
+      border-radius: 50px;
+      cursor: pointer;
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
+      letter-spacing: 0.03em;
+    }
+
+    .btn:active { transform: scale(0.93); }
+
+    .btn-yes {
+      background: linear-gradient(135deg, var(--pink) 0%, var(--rose) 100%);
+      color: white;
+      box-shadow: 0 6px 24px rgba(255, 77, 141, 0.45);
+    }
+
+    .btn-yes:hover {
+      transform: scale(1.06);
+      box-shadow: 0 10px 32px rgba(255, 77, 141, 0.55);
+    }
+
+    .btn-no {
+      background: white;
+      color: var(--pink);
+      border: 2px solid var(--pink-light);
+      box-shadow: 0 4px 12px rgba(255, 77, 141, 0.1);
+    }
+
+    .btn-no:hover {
+      transform: scale(1.06);
+      box-shadow: 0 6px 20px rgba(255, 77, 141, 0.2);
+    }
+
+    /* Hide animation */
+    .btn-no.hiding {
+      animation: runAway 0.5s cubic-bezier(0.55, 0, 1, 0.45) forwards;
+    }
+
+    @keyframes runAway {
+      0%   { transform: scale(1); opacity: 1; }
+      30%  { transform: scale(1.15) rotate(-5deg); }
+      100% { transform: scale(0) rotate(20deg) translateX(80px); opacity: 0; }
+    }
+
+    /* Hearts container */
+    #hearts-container {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 5;
+      overflow: hidden;
+    }
+
+    .heart {
+      position: absolute;
+      bottom: -60px;
+      font-size: 28px;
+      animation: floatUp linear forwards;
+      user-select: none;
+    }
+
+    @keyframes floatUp {
+      0%   { transform: translateY(0) scale(0.5) rotate(0deg); opacity: 0; }
+      10%  { opacity: 1; }
+      85%  { opacity: 1; }
+      100% { transform: translateY(-110vh) scale(1.2) rotate(25deg); opacity: 0; }
+    }
+
+    /* Success message */
+    .success-msg {
+      display: none;
+      animation: popIn 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+    }
+
+    @keyframes popIn {
+      from { opacity: 0; transform: scale(0.5); }
+      to   { opacity: 1; transform: scale(1); }
+    }
+
+    .success-msg.show { display: block; }
+
+    .success-emoji {
+      font-size: 64px;
+      display: block;
+      margin-bottom: 12px;
+    }
+
+    .success-text {
+      font-size: 1.8rem;
+      font-weight: 600;
+      color: var(--rose);
+      line-height: 1.4;
+    }
+
+    .success-sub {
+      font-size: 1rem;
+      color: #d47095;
+      margin-top: 8px;
+      font-weight: 300;
+    }
+
+    /* Floating decorative small hearts in bg */
+    .deco-heart {
+      position: fixed;
+      opacity: 0.12;
+      pointer-events: none;
+      z-index: 1;
+      font-size: 24px;
+      animation: decoFloat 8s ease-in-out infinite;
+    }
+
+    @keyframes decoFloat {
+      0%, 100% { transform: translateY(0) rotate(0deg); }
+      50% { transform: translateY(-18px) rotate(10deg); }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Decorative hearts in background -->
+  <span class="deco-heart" style="top:8%;left:7%;animation-delay:0s">💗</span>
+  <span class="deco-heart" style="top:15%;right:10%;animation-delay:1.5s;font-size:18px">💓</span>
+  <span class="deco-heart" style="bottom:20%;left:5%;animation-delay:3s;font-size:20px">💖</span>
+  <span class="deco-heart" style="bottom:10%;right:8%;animation-delay:2s">💕</span>
+  <span class="deco-heart" style="top:50%;left:3%;animation-delay:4s;font-size:16px">❤️</span>
+  <span class="deco-heart" style="top:35%;right:4%;animation-delay:0.5s;font-size:16px">💝</span>
+
+  <div id="hearts-container"></div>
+
+  <div class="card" id="card">
+    <!-- Default state -->
+    <div id="default-state">
+      <span class="emoji-big">🥺</span>
+      <div class="question">รักพี่ไหมคะเดีย 💕</div>
+      <div class="subtext">ตอบตรงๆ เลยนะ</div>
+      <div class="buttons">
+        <button class="btn btn-yes" onclick="handleYes()">รัก 💕</button>
+        <button class="btn btn-no" id="btn-no" onclick="handleNo()">ไม่รัก</button>
+      </div>
+    </div>
+
+    <!-- Success state -->
+    <div class="success-msg" id="success-state">
+      <span class="success-emoji">🥰</span>
+      <div class="success-text">งุ้ยยย น่ารักจังเลย<br>หัวใจเต็มเลยยย 💓</div>
+      <div class="success-sub">พี่ก็รักหนูเหมือนกันนะ 🌸</div>
+    </div>
+  </div>
+
+  <script>
+    const HEART_EMOJIS = ['❤️','💕','💖','💗','💓','💞','💝','🩷','💘','💟'];
+    let heartInterval = null;
+
+    function spawnHeart() {
+      const container = document.getElementById('hearts-container');
+      const el = document.createElement('span');
+      el.classList.add('heart');
+      el.textContent = HEART_EMOJIS[Math.floor(Math.random() * HEART_EMOJIS.length)];
+
+      const size = 20 + Math.random() * 28;
+      el.style.fontSize = size + 'px';
+      el.style.left = (Math.random() * 95) + '%';
+      const dur = 3.5 + Math.random() * 3;
+      el.style.animationDuration = dur + 's';
+
+      container.appendChild(el);
+      setTimeout(() => el.remove(), dur * 1000);
+    }
+
+    function handleYes() {
+      // Show success message
+      document.getElementById('default-state').style.display = 'none';
+      const success = document.getElementById('success-state');
+      success.classList.add('show');
+
+      // Launch hearts!
+      for (let i = 0; i < 15; i++) {
+        setTimeout(spawnHeart, i * 80);
+      }
+      heartInterval = setInterval(spawnHeart, 200);
+
+      // Slow down after 5s
+      setTimeout(() => {
+        clearInterval(heartInterval);
+        heartInterval = setInterval(spawnHeart, 800);
+      }, 5000);
+    }
+
+    function handleNo() {
+      const btn = document.getElementById('btn-no');
+      btn.classList.add('hiding');
+      btn.disabled = true;
+      setTimeout(() => {
+        btn.style.display = 'none';
+      }, 500);
+    }
+  </script>
+</body>
+</html>
